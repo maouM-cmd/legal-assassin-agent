@@ -3,17 +3,27 @@ from __future__ import annotations
 
 import csv
 import io
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from backend.es_client import list_hits, list_takedowns
+
+
+def _as_utc(dt: datetime) -> datetime:
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
+def parse_filter_datetime(value: str) -> datetime:
+    return _as_utc(datetime.fromisoformat(value.replace("Z", "+00:00")))
 
 
 def _parse_ts(value: str | None) -> datetime | None:
     if not value:
         return None
     try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        return _as_utc(datetime.fromisoformat(value.replace("Z", "+00:00")))
     except Exception:
         return None
 
@@ -22,9 +32,9 @@ def _in_range(ts: str | None, start: datetime | None, end: datetime | None) -> b
     dt = _parse_ts(ts)
     if dt is None:
         return start is None and end is None
-    if start and dt < start:
+    if start and dt < _as_utc(start):
         return False
-    if end and dt > end:
+    if end and dt > _as_utc(end):
         return False
     return True
 

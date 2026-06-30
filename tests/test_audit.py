@@ -44,7 +44,27 @@ def test_export_includes_hit_row():
     assert "submitted" in csv_data
 
 
-def test_export_date_filter():
+def test_export_date_filter_naive_bounds():
+    """Smoke test uses naive from/to query params; must not 500."""
+    hits = [
+        {
+            "timestamp": "2026-06-30T12:00:00+00:00",
+            "platform": "youtube",
+            "content_id": "demo",
+            "suspect_url": "https://example.com/v/1",
+            "final_score": 0.9,
+            "evasion_types": [],
+            "workflow_status": "confirmed",
+        }
+    ]
+    start = datetime(2020, 1, 1)
+    end = datetime(2030, 1, 1)
+    with patch("backend.audit.export.list_hits", return_value=hits), patch(
+        "backend.audit.export.list_takedowns", return_value=[]
+    ):
+        csv_data = export_compliance_report(start, end)
+    assert "youtube" in csv_data
+
     hits = [
         {
             "timestamp": "2026-01-01T00:00:00+00:00",

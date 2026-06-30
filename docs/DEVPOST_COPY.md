@@ -57,7 +57,7 @@ Python, FastAPI, Elasticsearch, Google Gemini, Playwright, APScheduler, WebSocke
 ## GitHub Repository
 
 ```
-https://github.com/YOUR_USER/legal-assassin-agent
+https://github.com/maouM-cmd/legal-assassin-agent
 ```
 
 ## Demo Video URL

@@ -72,6 +72,7 @@ gh run watch
 | 問題 | 対処 |
 |------|------|
 | `git push` 認証エラー | GitHub CLI (`gh auth login`) または PAT を使用 |
+| workflow ファイル push 拒否 | `gh auth refresh -h github.com -s workflow` を実行 |
 | CI で evasion 不足 | workflow の bootstrap ステップを確認 |
 | 大きな ZIP が commit された | `legal-assassin-agent-submission.zip` を `.gitignore` に追加して削除 |
 | `gh repo create` でリポジトリ名衝突 | `$env:GITHUB_REPO_NAME = "legal-assassin-agent-2"` を設定して再実行 |

@@ -179,12 +179,12 @@ def audit_export(
     from_date: str | None = None,
     to_date: str | None = None,
 ):
-    from datetime import datetime
+    from backend.audit.export import export_compliance_report, parse_filter_datetime
 
     start_raw = from_param or from_date
     end_raw = to_param or to_date
-    start = datetime.fromisoformat(start_raw) if start_raw else None
-    end = datetime.fromisoformat(end_raw) if end_raw else None
+    start = parse_filter_datetime(start_raw) if start_raw else None
+    end = parse_filter_datetime(end_raw) if end_raw else None
     csv_data = export_compliance_report(start, end)
     filename = "legal_assassin_compliance.csv"
     return StreamingResponse(

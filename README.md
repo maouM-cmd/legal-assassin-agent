@@ -1,6 +1,6 @@
 # Legal Assassin Agent — 著作権保護エージェント
 
-![CI](https://github.com/YOUR_USER/legal-assassin-agent/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/maouM-cmd/legal-assassin-agent/actions/workflows/ci.yml/badge.svg)
 
 VOD 事業者の自社コンテンツを正解データとして学習し、YouTube / TikTok / X を 24 時間巡回。反転・ピッチ変更・2 画面合成などの巧妙な違法アップロードを検出し、DMCA 削除申請を自動生成・送信するエージェント。
 

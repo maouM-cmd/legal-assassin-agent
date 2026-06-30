@@ -2,7 +2,8 @@
 
 Devpost / Elastic Hackathon 等への記入用。コピペ元は [SUBMISSION.md](../SUBMISSION.md)。
 
-**そのまま貼れる文面:** [DEVPOST_COPY.md](DEVPOST_COPY.md)
+**そのまま貼れる文面:** [DEVPOST_COPY.md](DEVPOST_COPY.md) + [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md)  
+**提出進捗:** [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md)
 
 ## 基本情報
 
@@ -41,14 +42,27 @@ python scripts\verify_setup.py
 
 ZIP 利用時: MP4 は含まれないため **bootstrap 必須**。
 
+## Phase 8: Devpost 提出完走
+
+```powershell
+.\scripts\submit_portal_check.ps1
+```
+
+上記で final_check + ZIP 生成 + 次の手順を一括表示。
+
+| 順序 | 作業 |
+|------|------|
+| 1 | `submit_portal_check.ps1` — 自動チェック + ZIP |
+| 2 | [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md) で録画・アップロード |
+| 3 | Devpost に [DEVPOST_COPY.md](DEVPOST_COPY.md) + [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md) を貼付 |
+| 4 | [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) を更新（動画 URL / Devpost URL / 提出日） |
+
 ## 提出前セルフチェック
 
-- [ ] `python scripts\verify_setup.py` が pass
-- [ ] `pytest tests/` が pass
-- [ ] `.\scripts\package_submission.ps1` が ZIP を生成
+- [ ] `.\scripts\submit_portal_check.ps1` が pass（verify + pytest + ZIP）
 - [ ] `docs/screenshots/*.png` がリポジトリに存在
 - [ ] GitHub Actions CI が green
-- [ ] デモ動画をアップロードし URL を記入（[DEVPOST_COPY.md](docs/DEVPOST_COPY.md)）
+- [ ] デモ動画をアップロードし URL を [DEVPOST_COPY.md](DEVPOST_COPY.md) + [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) に記入
 - [ ] リハーサル: [scripts/rehearsal_checklist.md](../scripts/rehearsal_checklist.md)
 
 ## 提出 ZIP

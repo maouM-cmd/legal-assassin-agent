@@ -4,14 +4,20 @@
 
 VOD 事業者の自社コンテンツを正解データとして学習し、YouTube / TikTok / X を 24 時間巡回。反転・ピッチ変更・2 画面合成などの巧妙な違法アップロードを検出し、DMCA 削除申請を自動生成・送信するエージェント。
 
-## 提出前（Phase 7）
+## 提出前（Phase 8）
 
 ```powershell
-.\scripts\final_submit_check.ps1
-.\scripts\publish_github.ps1
+.\scripts\submit_portal_check.ps1
 ```
 
-Devpost 記入: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md)（push 後に `YOUR_USER` を実際のユーザー名に置換）
+Devpost 記入: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md) + [`docs/DEVPOST_EXTENDED.md`](docs/DEVPOST_EXTENDED.md)  
+提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)
+
+## Phase 8: Devpost 提出完走
+
+- **ワンストップゲート**: [`scripts/submit_portal_check.ps1`](scripts/submit_portal_check.ps1) — final_check + ZIP + 手順表示
+- **Devpost 拡張フィールド**: [`docs/DEVPOST_EXTENDED.md`](docs/DEVPOST_EXTENDED.md) — Inspiration / Challenges / Accomplishments 等
+- **提出ステータス**: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md) — 動画 URL / Devpost URL / 提出日
 
 ## Phase 7: GitHub 公開 + 提出完走
 

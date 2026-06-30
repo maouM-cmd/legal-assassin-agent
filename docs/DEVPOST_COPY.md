@@ -2,7 +2,7 @@
 
 Paste into the submission portal. Update `YOUR_USER` and video URL after upload.
 
-Related: [PORTAL_CHECKLIST.md](PORTAL_CHECKLIST.md) | [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md)
+Related: [PORTAL_CHECKLIST.md](PORTAL_CHECKLIST.md) | [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md) | [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md)
 
 ---
 
@@ -65,6 +65,10 @@ https://github.com/maouM-cmd/legal-assassin-agent
 ```
 (upload recording per DEMO_VIDEO_SCRIPT.md and paste URL here)
 ```
+
+After upload, update [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) Demo video URL row.
+
+Extended fields (Inspiration, Challenges, etc.): [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md)
 
 ## Elastic Hackathon Highlights
 

@@ -35,4 +35,4 @@
 - YouTube（限定公開 / 公開）
 - Loom / Google Drive（リンク共有）
 
-URL を [PORTAL_CHECKLIST.md](PORTAL_CHECKLIST.md) の「デモ動画 URL」に記入してください。
+URL を [DEVPOST_COPY.md](DEVPOST_COPY.md) の Demo Video 欄と [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) の Demo video URL 行に記入してください。

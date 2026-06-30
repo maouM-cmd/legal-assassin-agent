@@ -1,0 +1,1 @@
+"""Legal Assassin Agent backend."""

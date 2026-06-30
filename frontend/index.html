@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Assassin — 著作権保護エージェント</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>LEGAL ASSASSIN</h1>
+    <p class="tagline">24/7 Copyright Patrol · DMCA Auto-Strike</p>
+    <button id="btn-audit-export" class="btn-secondary header-btn">EXPORT AUDIT CSV</button>
+    <div id="mode-badge" class="badge warn">DEMO</div>
+    <div id="status-badge" class="badge offline">CONNECTING</div>
+  </header>
+
+  <section class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-label">TARGETS ACQUIRED</span>
+      <span id="hits-total" class="stat-value">0</span>
+    </div>
+    <div class="stat-card kill">
+      <span class="stat-label">TAKEDOWNS SENT</span>
+      <span id="takedowns-submitted" class="stat-value">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">PENDING APPROVAL</span>
+      <span id="pending-approval" class="stat-value">0</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">REFERENCE LIBRARY</span>
+      <span id="refs-total" class="stat-value">0</span>
+    </div>
+  </section>
+
+  <section class="patrol-panel">
+    <h2>Patrol Status</h2>
+    <div id="patrol-grid" class="patrol-grid"></div>
+    <div class="btn-row">
+      <button id="btn-patrol" class="btn-primary">RUN ALL PATROLS</button>
+      <button class="btn-secondary" data-platform="youtube">YouTube</button>
+      <button class="btn-secondary" data-platform="tiktok">TikTok</button>
+      <button class="btn-secondary" data-platform="twitter">X</button>
+    </div>
+  </section>
+
+  <section class="queue-panel">
+    <h2>Approval Queue</h2>
+    <div id="review-queue" class="event-list"></div>
+  </section>
+
+  <section class="refs-panel">
+    <h2>Reference Library</h2>
+    <div id="refs-list" class="event-list"></div>
+  </section>
+
+  <section class="hits-panel">
+    <h2>Recent Hits</h2>
+    <div id="hits-list" class="event-list"></div>
+  </section>
+
+  <section class="manual-panel">
+    <h2>Manual Action Required (CAPTCHA)</h2>
+    <div id="pending-manual" class="event-list"></div>
+  </section>
+
+  <section class="failed-panel">
+    <h2>Failed Takedowns</h2>
+    <button id="btn-retry" class="btn-secondary">RETRY FAILED</button>
+    <div id="failed-takedowns" class="event-list"></div>
+  </section>
+
+  <section class="takedowns-panel">
+    <h2>Takedown Log</h2>
+    <div id="takedowns-list" class="event-list"></div>
+  </section>
+
+  <dialog id="dmca-dialog">
+    <h3>DMCA Notice Preview</h3>
+    <pre id="dmca-body"></pre>
+    <button id="dmca-close" class="btn-secondary">Close</button>
+  </dialog>
+
+  <dialog id="compare-dialog">
+    <h3>Thumbnail Comparison</h3>
+    <div class="compare-grid">
+      <div>
+        <div class="compare-label">Reference</div>
+        <img id="compare-reference" alt="Reference thumbnail" />
+      </div>
+      <div>
+        <div class="compare-label">Suspect</div>
+        <img id="compare-suspect" alt="Suspect thumbnail" />
+      </div>
+    </div>
+    <button id="compare-close" class="btn-secondary">Close</button>
+  </dialog>
+
+  <div id="toast-container"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

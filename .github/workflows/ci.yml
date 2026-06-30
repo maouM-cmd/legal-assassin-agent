@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+
+      - name: Run pytest
+        run: pytest tests/ -v
+
+      - name: Bootstrap demo data
+        run: |
+          python -m scripts.create_demo_clip
+          python -m scripts.index_reference
+          python -m scripts.generate_evasion_samples
+          python scripts/generate_screenshot_placeholders.py
+          python scripts/verify_setup.py
+
+      - name: Start server and smoke test
+        run: |
+          DEMO_MODE=true PATROL_ENABLED=false python -m uvicorn backend.main:app --host 127.0.0.1 --port 8001 &
+          sleep 5
+          python scripts/smoke_test.py

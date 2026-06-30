@@ -1,0 +1,14 @@
+# Run bootstrap on the host first so demo MP4s exist, then:
+#   docker compose up --build
+# Volumes mount data/reference_clips and data/evasion_samples from the host.
+services:
+  legal-assassin:
+    build: .
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+    volumes:
+      - ./data/reference_clips:/app/data/reference_clips
+      - ./data/evasion_samples:/app/data/evasion_samples
+    restart: unless-stopped

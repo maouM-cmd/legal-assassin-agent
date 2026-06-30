@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+data/sessions/
+data/reference_seed.jsonl
+data/reference_clips/*.mp4
+data/evasion_samples/*.mp4
+*.log
+legal-assassin-agent-submission.zip

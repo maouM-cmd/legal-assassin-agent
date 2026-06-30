@@ -1,6 +1,24 @@
 # Legal Assassin Agent — 著作権保護エージェント
 
+![CI](https://github.com/YOUR_USER/legal-assassin-agent/actions/workflows/ci.yml/badge.svg)
+
 VOD 事業者の自社コンテンツを正解データとして学習し、YouTube / TikTok / X を 24 時間巡回。反転・ピッチ変更・2 画面合成などの巧妙な違法アップロードを検出し、DMCA 削除申請を自動生成・送信するエージェント。
+
+## 提出前（Phase 7）
+
+```powershell
+.\scripts\final_submit_check.ps1
+.\scripts\publish_github.ps1
+```
+
+Devpost 記入: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md)（push 後に `YOUR_USER` を実際のユーザー名に置換）
+
+## Phase 7: GitHub 公開 + 提出完走
+
+- **最終ゲート**: [`scripts/final_submit_check.ps1`](scripts/final_submit_check.ps1) — verify + pytest + screenshots
+- **GitHub 公開**: [`scripts/publish_github.ps1`](scripts/publish_github.ps1) — `gh` で public push + CI 確認
+- **Devpost コピペ**: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md)
+- **CI バッジ**: push 後に README の `YOUR_USER` を置換
 
 ## Phase 6: 提出ポータル完走
 

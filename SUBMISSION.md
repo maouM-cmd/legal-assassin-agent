@@ -74,6 +74,17 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 7 ハイライト
+
+- `final_submit_check.ps1` — 提出前の一括自動チェック
+- `publish_github.ps1` — public リポジトリ作成・push・CI 確認
+- Devpost コピペテンプレ: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md)
+
+```powershell
+.\scripts\final_submit_check.ps1
+.\scripts\publish_github.ps1
+```
+
 ## Phase 6 ハイライト
 
 - bootstrap/CI で Kibana プレースホルダー PNG 同梱

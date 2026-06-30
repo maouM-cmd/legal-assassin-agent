@@ -2,6 +2,8 @@
 
 Devpost / Elastic Hackathon 等への記入用。コピペ元は [SUBMISSION.md](../SUBMISSION.md)。
 
+**そのまま貼れる文面:** [DEVPOST_COPY.md](DEVPOST_COPY.md)
+
 ## 基本情報
 
 | 欄 | 記入内容 |
@@ -46,7 +48,7 @@ ZIP 利用時: MP4 は含まれないため **bootstrap 必須**。
 - [ ] `.\scripts\package_submission.ps1` が ZIP を生成
 - [ ] `docs/screenshots/*.png` がリポジトリに存在
 - [ ] GitHub Actions CI が green
-- [ ] デモ動画をアップロードし URL を記入
+- [ ] デモ動画をアップロードし URL を記入（[DEVPOST_COPY.md](docs/DEVPOST_COPY.md)）
 - [ ] リハーサル: [scripts/rehearsal_checklist.md](../scripts/rehearsal_checklist.md)
 
 ## 提出 ZIP

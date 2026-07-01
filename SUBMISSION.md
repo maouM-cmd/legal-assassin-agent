@@ -74,6 +74,12 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 13 ハイライト
+
+- YouTube / X partner アダプター — `YOUTUBE_BACKEND` / `X_BACKEND` + 共通 `partner_client.py`
+- 提出完走チェックリスト — [`docs/SUBMISSION_CLOSURE.md`](docs/SUBMISSION_CLOSURE.md)
+- 3 プラットフォーム partner 移行 — [`docs/platform_partner_api.md`](docs/platform_partner_api.md)
+
 ## Phase 12 ハイライト
 
 - TikTok プラットフォームアダプター — `backend/platforms/` + `TIKTOK_BACKEND` 切替

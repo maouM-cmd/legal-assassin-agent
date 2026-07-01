@@ -8,7 +8,7 @@ from typing import Any
 from backend.dmca import selectors
 from backend.dmca.submitters.base import BaseSubmitter
 from backend.scanners.base import BaseScanner, ScanCandidate, ScanResult
-from backend.scanners.youtube import _demo_candidates
+from backend.scanners.demo_candidates import demo_candidates as _demo_candidates
 
 FORM_URL = "https://www.tiktok.com/legal/report/Copyright"
 

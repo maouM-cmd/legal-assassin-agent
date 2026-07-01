@@ -26,7 +26,9 @@ Pipeline: scan -> download -> fingerprint -> hybrid kNN match -> evasion detecti
 - Audio: Chromaprint fingerprints with pitch normalization
 - AI: Gemini Vision for split-screen detection; embedding kNN on reference_fingerprints
 - Backend: Python 3.12, FastAPI, APScheduler, WebSocket events
-- DMCA: Jinja2 notices + Playwright form submitters (YouTube, TikTok, X)
+- Platform adapters: backend/platforms/ — YouTube (API/partner), TikTok (Playwright/partner), X (API/partner)
+- DMCA: Jinja2 notices + Playwright or partner HTTP submitters
+- Compliance: counter-notification API, legal hold, audit CSV columns
 - Observability: Elasticsearch indices + importable Kibana dashboard NDJSON
 - Ops: exponential backoff retry, webhook alerts, audit CSV, API key gate
 ```
@@ -63,6 +65,7 @@ Elasticsearch is a strong fit for both candidate narrowing (kNN) and operational
 - Elastic Cloud always-on deployment with live Kibana  [setup: scripts/setup_elastic_cloud.ps1 — Phase 10]
 - API key header support in the dashboard UI  [done — Phase 10 SETTINGS]
 - Official platform partner APIs instead of Playwright for TikTok  [adapter layer — Phase 12, docs/tiktok_partner_api.md]
+- YouTube / X partner API adapters  [done — Phase 13, docs/platform_partner_api.md]
 - Real Chromaprint (fpcalc) in Docker images  [done — Phase 10 Dockerfile]
 - Counter-notification workflow and legal hold integration  [done — Phase 11, docs/compliance_workflow.md]
 ```

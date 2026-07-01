@@ -37,7 +37,24 @@ foreach ($shot in $shots) {
     }
 }
 
-Write-Host "`n[4/4] git status..."
+Write-Host "`n[4/5] Phase 12/13 platform artifacts..."
+$artifacts = @(
+    "backend\platforms\factory.py",
+    "backend\platforms\partner_client.py",
+    "docs\platform_partner_api.md",
+    "docs\tiktok_partner_api.md",
+    "tests\test_platform_adapters.py"
+)
+foreach ($artifact in $artifacts) {
+    if (-not (Test-Path (Join-Path $Root $artifact))) {
+        Write-Host "  MISSING: $artifact" -ForegroundColor Red
+        $failed = $true
+    } else {
+        Write-Host "  OK: $artifact"
+    }
+}
+
+Write-Host "`n[5/5] git status..."
 if (Get-Command git -ErrorAction SilentlyContinue) {
     $stagedEnv = git diff --cached --name-only 2>$null | Where-Object { $_ -eq ".env" }
     if ($stagedEnv) {

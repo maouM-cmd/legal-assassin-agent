@@ -100,6 +100,12 @@ async function refreshHealth() {
   if (data.tiktok_backend) {
     modeBadge.textContent += ` | TikTok: ${data.tiktok_backend}`;
   }
+  if (data.youtube_backend) {
+    modeBadge.textContent += ` | YouTube: ${data.youtube_backend}`;
+  }
+  if (data.x_backend) {
+    modeBadge.textContent += ` | X: ${data.x_backend}`;
+  }
   updateApiKeyWarning();
 }
 

@@ -28,8 +28,15 @@ Legal Assassin Agent learns fingerprints of your owned content, stores them in E
 **How it works**
 1. Index reference clips (pHash + Chromaprint audio + Gemini embeddings) into `reference_fingerprints`
 2. Patrol candidates → hybrid kNN + full fingerprint match → evasion badges (flip, pitch, speed, crop, split-screen)
-3. Approval queue or auto-strike → DMCA notice generation → Playwright form submit → log to `takedown_requests`
-4. Kibana dashboard for platform detections, evasion breakdown, takedown success, and audit CSV export
+3. Approval queue or auto-strike → DMCA notice generation → platform adapters (API / Playwright / partner HTTP) → log to `takedown_requests`
+4. Compliance panel: counter-notification recording, legal hold, audit CSV with hold/counter columns
+5. Kibana dashboard for platform detections, evasion breakdown, takedown success
+
+**Platform adapters** (`backend/platforms/`)
+- YouTube: `YOUTUBE_BACKEND=api` (Data API + Playwright DMCA) or `partner`
+- TikTok: `TIKTOK_BACKEND=playwright` or `partner`
+- X: `X_BACKEND=api` (API v2 + Playwright DMCA) or `partner`
+- See `docs/platform_partner_api.md` for partner HTTP migration
 
 **Elasticsearch**
 - `reference_fingerprints` — owned content fingerprints
@@ -43,7 +50,7 @@ copy .env.example .env
 python scripts\verify_setup.py
 .\start.bat
 ```
-Open http://localhost:8001 → RUN ALL PATROLS → COMPARE thumbnails → EXPORT AUDIT CSV
+Open http://localhost:8001 → RUN ALL PATROLS → COMPARE thumbnails → Compliance panel → EXPORT AUDIT CSV
 
 Demo works without Elastic Cloud (in-memory fallback). Kibana NDJSON and screenshots included.
 ```

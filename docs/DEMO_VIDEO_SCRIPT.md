@@ -19,10 +19,11 @@
 | 0:00–0:30 | タイトル + ダッシュボード全体 | 「Legal Assassin は VOD 向け著作権保護エージェントです。自社動画のフィンガープリントを Elasticsearch に蓄積し、改変動画を検出して DMCA まで自動化します。」 |
 | 0:30–1:00 | Reference Library + モードバッジ（DEMO / kNN） | 「pHash と音声指紋を正解ライブラリに登録。kNN で候補を絞り込み、フル照合で精度を上げます。」 |
 | 1:00–2:30 | **RUN ALL PATROLS** → ヒット一覧 | 「5 種の改変（反転・ピッチ・速度・クロップ・2画面）を検出。TARGET ACQUIRED のトーストを確認。」 |
-| 2:30–3:15 | **COMPARE** モーダル | 「正解と疑わしい動画のサムネを並べて、法務レビューを支援します。」 |
-| 3:15–3:45 | **EXPORT AUDIT CSV** クリック | 「コンプライアンス用に hits と takedowns を CSV エクスポート。」 |
-| 3:45–4:30 | Kibana スクリーンショットまたは実ダッシュボード | 「Elasticsearch の 3 インデックスを Kibana で可視化。プラットフォーム別検出と改変タイプ内訳。」 |
-| 4:30–5:00 | エンディング（SUBMISSION の技術スタック） | 「FastAPI、Gemini、Playwright DMCA、Elastic 8.8 ダッシュボードで 24/7 著作権パトロールを実現。」 |
+| 2:30–3:00 | **Compliance** パネル + mode バッジ | 「Counter-notification 記録と legal hold。モードバッジで YouTube/TikTok/X のバックエンドを確認。」 |
+| 3:00–3:30 | **COMPARE** モーダル | 「正解と疑わしい動画のサムネを並べて、法務レビューを支援します。」 |
+| 3:30–4:00 | **EXPORT AUDIT CSV** クリック | 「コンプライアンス用に hits と takedowns を CSV エクスポート。」 |
+| 4:00–4:30 | Kibana スクリーンショットまたは実ダッシュボード | 「Elasticsearch の 3 インデックスを Kibana で可視化。プラットフォーム別検出と改変タイプ内訳。」 |
+| 4:30–5:00 | エンディング（SUBMISSION の技術スタック） | 「FastAPI、Gemini、プラットフォームアダプター、Elastic ダッシュボードで 24/7 著作権パトロールを実現。」 |
 
 ## 撮影チェックリスト
 

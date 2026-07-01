@@ -2,6 +2,8 @@
 
 Switch TikTok patrol and DMCA from Playwright to an official partner HTTP API.
 
+**Common schema and multi-platform guide:** [platform_partner_api.md](platform_partner_api.md)
+
 Related: [SUBMISSION.md](../SUBMISSION.md) | [compliance_workflow.md](compliance_workflow.md)
 
 ## Backends
@@ -19,43 +21,9 @@ TIKTOK_PARTNER_API_KEY=
 
 ## Partner API schema (expected)
 
-### Search — `GET /v1/search?q={keyword}`
+See [platform_partner_api.md](platform_partner_api.md) for full request/response format.
 
-Request headers:
-
-```
-Authorization: Bearer {TIKTOK_PARTNER_API_KEY}
-```
-
-Response:
-
-```json
-{
-  "videos": [
-    { "url": "https://www.tiktok.com/@user/video/123", "title": "clip title" }
-  ]
-}
-```
-
-### DMCA — `POST /v1/dmca`
-
-Request body:
-
-```json
-{
-  "suspect_url": "https://www.tiktok.com/@user/video/123",
-  "body": "DMCA notice text...",
-  "platform": "tiktok"
-}
-```
-
-Response:
-
-```json
-{ "status": "submitted" }
-```
-
-If `TIKTOK_BACKEND=partner` but URL/key are unset, scan returns an error and submit returns `failed` with message:
+If `TIKTOK_BACKEND=partner` but URL/key are unset:
 
 `TIKTOK_PARTNER_API not configured — set TIKTOK_BACKEND=playwright`
 

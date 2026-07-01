@@ -34,7 +34,15 @@ from backend.es_client import (
     list_references,
     list_takedowns,
 )
-from backend.platforms.factory import partner_api_configured, tiktok_backend
+from backend.platforms.factory import (
+    partner_api_configured,
+    tiktok_backend,
+    tiktok_partner_configured,
+    x_backend,
+    x_partner_configured,
+    youtube_backend,
+    youtube_partner_configured,
+)
 from backend.thumbnails import get_hit_thumbnails
 
 load_dotenv()
@@ -131,7 +139,12 @@ def health():
         "webhook_enabled": os.getenv("WEBHOOK_ENABLED", "false").lower() == "true",
         "api_key_required": bool(os.getenv("API_KEY", "").strip()),
         "tiktok_backend": tiktok_backend(),
-        "tiktok_partner_configured": partner_api_configured(),
+        "tiktok_partner_configured": tiktok_partner_configured(),
+        "youtube_backend": youtube_backend(),
+        "youtube_partner_configured": youtube_partner_configured(),
+        "x_backend": x_backend(),
+        "x_partner_configured": x_partner_configured(),
+        "partner_api_configured": partner_api_configured(),
     }
 
 

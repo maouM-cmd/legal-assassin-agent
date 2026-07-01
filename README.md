@@ -13,7 +13,20 @@ VOD 事業者の自社コンテンツを正解データとして学習し、YouT
 ```
 
 Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
-提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)
+提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)  
+完走チェックリスト: [`docs/SUBMISSION_CLOSURE.md`](docs/SUBMISSION_CLOSURE.md)
+
+## Phase 13: 提出完走 + プラットフォーム拡張
+
+- **YouTube / X partner アダプター**: `YOUTUBE_BACKEND` / `X_BACKEND`（`api` デフォルト | `partner`）
+- **共通 partner HTTP**: [`docs/platform_partner_api.md`](docs/platform_partner_api.md)
+- **提出完走**: `submit_portal_check.ps1` → `rehearse_demo.ps1` → Devpost → `update_submission_status.ps1` → `submit_closure_check.ps1`
+
+```env
+YOUTUBE_BACKEND=api
+X_BACKEND=api
+TIKTOK_BACKEND=playwright
+```
 
 ## Phase 12: TikTok プラットフォームアダプター
 

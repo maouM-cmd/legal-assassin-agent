@@ -46,3 +46,4 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 Write-Host ""
 Write-Host "Elastic Cloud preflight OK — you can show live Kibana in the demo video." -ForegroundColor Green
 Write-Host "  Import dashboard: docs\kibana\dashboard.ndjson"
+Write-Host "  Full setup: .\scripts\setup_elastic_cloud.ps1"

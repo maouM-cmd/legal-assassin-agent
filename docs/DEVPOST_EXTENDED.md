@@ -60,9 +60,9 @@ Elasticsearch is a strong fit for both candidate narrowing (kNN) and operational
 ## What's next for Legal Assassin Agent
 
 ```
-- Elastic Cloud always-on deployment with live Kibana
-- API key header support in the dashboard UI
+- Elastic Cloud always-on deployment with live Kibana  [setup: scripts/setup_elastic_cloud.ps1 — Phase 10]
+- API key header support in the dashboard UI  [done — Phase 10 SETTINGS]
 - Official platform partner APIs instead of Playwright for TikTok
-- Real Chromaprint (fpcalc) in Docker images
+- Real Chromaprint (fpcalc) in Docker images  [done — Phase 10 Dockerfile]
 - Counter-notification workflow and legal hold integration
 ```

@@ -2,6 +2,18 @@
 
 Legal Assassin Agent を Elasticsearch / Kibana と接続する手順です。未設定でも `DEMO_MODE=true` でインメモリ動作しますが、ハッカソン審査では ES 連携のデモを推奨します。
 
+## ワンショット（推奨）
+
+`.env` に Elastic 認証情報を設定後:
+
+```powershell
+.\scripts\bootstrap.ps1
+.\scripts\setup_elastic_cloud.ps1
+.\start.bat
+```
+
+上記でインデックス作成 + 正解ライブラリ投入まで一括実行します。接続確認のみなら `.\scripts\verify_elastic_cloud.ps1`。
+
 ## 1. Elastic Cloud トライアル
 
 1. [Elastic Cloud](https://cloud.elastic.co/) でアカウント作成

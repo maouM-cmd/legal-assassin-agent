@@ -74,6 +74,17 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 10 ハイライト
+
+- ダッシュボード **SETTINGS** — `API_KEY` 環境変数時に `X-API-Key` を UI から設定
+- Docker イメージに **fpcalc**（`libchromaprint-tools`）同梱
+- `setup_elastic_cloud.ps1` — Elastic Cloud インデックス作成 + 正解ライブラリ投入ワンショット
+
+```powershell
+.\scripts\setup_elastic_cloud.ps1
+docker compose up --build
+```
+
 ## Phase 9 ハイライト
 
 - `rehearse_demo.ps1` — デモ動画録画リハーサル（テレプロンプター + サーバー自動起動）

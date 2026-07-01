@@ -11,6 +11,8 @@
     <h1>LEGAL ASSASSIN</h1>
     <p class="tagline">24/7 Copyright Patrol · DMCA Auto-Strike</p>
     <button id="btn-audit-export" class="btn-secondary header-btn">EXPORT AUDIT CSV</button>
+    <button id="btn-settings" class="btn-secondary header-btn" type="button" title="API Key settings">SETTINGS</button>
+    <div id="api-key-warning" class="badge warn api-key-warn hidden">API KEY REQUIRED</div>
     <div id="mode-badge" class="badge warn">DEMO</div>
     <div id="status-badge" class="badge offline">CONNECTING</div>
   </header>
@@ -75,6 +77,18 @@
     <h2>Takedown Log</h2>
     <div id="takedowns-list" class="event-list"></div>
   </section>
+
+  <dialog id="settings-dialog">
+    <h3>API Key</h3>
+    <p class="settings-hint">Required when <code>API_KEY</code> is set in server <code>.env</code>. Stored in browser localStorage only.</p>
+    <label class="settings-label" for="api-key-input">X-API-Key</label>
+    <input id="api-key-input" type="password" autocomplete="off" placeholder="Enter API key" />
+    <div class="btn-row settings-actions">
+      <button id="settings-save" class="btn-primary" type="button">Save</button>
+      <button id="settings-clear" class="btn-secondary" type="button">Clear</button>
+      <button id="settings-close" class="btn-secondary" type="button">Close</button>
+    </div>
+  </dialog>
 
   <dialog id="dmca-dialog">
     <h3>DMCA Notice Preview</h3>

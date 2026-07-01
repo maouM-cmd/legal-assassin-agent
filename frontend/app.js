@@ -1,5 +1,6 @@
 const badge = document.getElementById("status-badge");
 const modeBadge = document.getElementById("mode-badge");
+const apiKeyWarning = document.getElementById("api-key-warning");
 const hitsTotal = document.getElementById("hits-total");
 const takedownsSubmitted = document.getElementById("takedowns-submitted");
 const pendingApproval = document.getElementById("pending-approval");
@@ -22,8 +23,35 @@ const compareReference = document.getElementById("compare-reference");
 const compareSuspect = document.getElementById("compare-suspect");
 const compareClose = document.getElementById("compare-close");
 const btnAuditExport = document.getElementById("btn-audit-export");
+const settingsDialog = document.getElementById("settings-dialog");
+const apiKeyInput = document.getElementById("api-key-input");
+const btnSettings = document.getElementById("btn-settings");
+const settingsSave = document.getElementById("settings-save");
+const settingsClear = document.getElementById("settings-clear");
+const settingsClose = document.getElementById("settings-close");
+
+const API_KEY_STORAGE = "legal_assassin_api_key";
 
 let ws;
+let apiKeyRequired = false;
+
+function getStoredApiKey() {
+  return localStorage.getItem(API_KEY_STORAGE) || "";
+}
+
+function setStoredApiKey(value) {
+  if (value) {
+    localStorage.setItem(API_KEY_STORAGE, value);
+  } else {
+    localStorage.removeItem(API_KEY_STORAGE);
+  }
+  updateApiKeyWarning();
+}
+
+function updateApiKeyWarning() {
+  const missing = apiKeyRequired && !getStoredApiKey();
+  apiKeyWarning.classList.toggle("hidden", !missing);
+}
 
 function showToast(message, danger = false) {
   const el = document.createElement("div");
@@ -33,9 +61,23 @@ function showToast(message, danger = false) {
   setTimeout(() => el.remove(), 4000);
 }
 
+async function apiFetch(url, options = {}) {
+  const headers = { ...(options.headers || {}) };
+  const apiKey = getStoredApiKey();
+  if (apiKey) {
+    headers["X-API-Key"] = apiKey;
+  }
+  const res = await fetch(url, { ...options, headers });
+  if (res.status === 401) {
+    showToast("API key required or invalid", true);
+  }
+  return res;
+}
+
 async function refreshHealth() {
   const res = await fetch("/api/health");
   const data = await res.json();
+  apiKeyRequired = Boolean(data.api_key_required);
   if (data.demo_mode) {
     modeBadge.textContent = "DEMO MODE";
     modeBadge.className = "badge warn";
@@ -52,6 +94,7 @@ async function refreshHealth() {
   if (data.api_key_required) {
     modeBadge.textContent += " | API Key";
   }
+  updateApiKeyWarning();
 }
 
 function connectWs() {
@@ -146,7 +189,8 @@ function bindQueueButtons() {
   document.querySelectorAll(".btn-approve").forEach((btn) => {
     btn.onclick = async () => {
       const hitId = btn.dataset.hit;
-      await fetch(`/api/hits/${hitId}/approve`, { method: "POST" });
+      const res = await apiFetch(`/api/hits/${hitId}/approve`, { method: "POST" });
+      if (!res.ok) return;
       showToast("TAKEDOWN SENT");
       refreshAll();
     };
@@ -154,7 +198,8 @@ function bindQueueButtons() {
   document.querySelectorAll(".btn-reject").forEach((btn) => {
     btn.onclick = async () => {
       const hitId = btn.dataset.hit;
-      await fetch(`/api/hits/${hitId}/reject`, { method: "POST" });
+      const res = await apiFetch(`/api/hits/${hitId}/reject`, { method: "POST" });
+      if (!res.ok) return;
       showToast("REJECTED");
       refreshAll();
     };
@@ -293,7 +338,8 @@ async function runPatrol(platform) {
   btnPatrol.textContent = "PATROLLING...";
   try {
     const url = platform ? `/api/patrol/${platform}` : "/api/patrol";
-    await fetch(url, { method: "POST" });
+    const res = await apiFetch(url, { method: "POST" });
+    if (!res.ok) return;
     showToast("PATROL COMPLETE");
     refreshAll();
   } finally {
@@ -316,7 +362,8 @@ btnPatrol.addEventListener("click", () => runPatrol(null));
 btnRetry.addEventListener("click", async () => {
   btnRetry.disabled = true;
   try {
-    await fetch("/api/takedowns/retry", { method: "POST" });
+    const res = await apiFetch("/api/takedowns/retry", { method: "POST" });
+    if (!res.ok) return;
     showToast("RETRY COMPLETE");
     refreshAll();
   } finally {
@@ -331,6 +378,22 @@ compareClose.addEventListener("click", () => compareDialog.close());
 btnAuditExport.addEventListener("click", () => {
   window.location.href = "/api/audit/export";
 });
+
+btnSettings.addEventListener("click", () => {
+  apiKeyInput.value = getStoredApiKey();
+  settingsDialog.showModal();
+});
+settingsSave.addEventListener("click", () => {
+  setStoredApiKey(apiKeyInput.value.trim());
+  showToast("API key saved");
+  settingsDialog.close();
+});
+settingsClear.addEventListener("click", () => {
+  apiKeyInput.value = "";
+  setStoredApiKey("");
+  showToast("API key cleared");
+});
+settingsClose.addEventListener("click", () => settingsDialog.close());
 
 connectWs();
 refreshHealth();

@@ -15,6 +15,17 @@ VOD 事業者の自社コンテンツを正解データとして学習し、YouT
 Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
 提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)
 
+## Phase 10: 本番準備
+
+- **API Key UI**: ダッシュボード **SETTINGS** — `API_KEY` 設定時に `X-API-Key` を localStorage から送信
+- **Docker fpcalc**: `Dockerfile` に `libchromaprint-tools` 同梱（Chromaprint 本番照合）
+- **Elastic Cloud セットアップ**: [`scripts/setup_elastic_cloud.ps1`](scripts/setup_elastic_cloud.ps1) — インデックス + 参照投入ワンショット
+
+```powershell
+.\scripts\setup_elastic_cloud.ps1   # .env に ELASTIC_* 設定後
+docker compose up --build           # fpcalc + ffmpeg 同梱イメージ
+```
+
 ## Phase 9: 提出実施完走
 
 - **録画リハーサル**: [`scripts/rehearse_demo.ps1`](scripts/rehearse_demo.ps1) — verify + サーバー起動 + テレプロンプター
@@ -80,7 +91,7 @@ Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKT
 - **DMCA プレビュー**: 送信前に通知文面を確認
 - **URL 重複排除**: 既処理 URL はスキップ
 - **提出 ZIP**: `.\scripts\package_submission.ps1`
-- **Docker**: `docker compose up --build`
+- **Docker**: `docker compose up --build`（ffmpeg + **fpcalc** 同梱）
 
 詳細: [SUBMISSION.md](SUBMISSION.md)
 

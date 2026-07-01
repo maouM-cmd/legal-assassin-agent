@@ -74,6 +74,19 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 9 ハイライト
+
+- `rehearse_demo.ps1` — デモ動画録画リハーサル（テレプロンプター + サーバー自動起動）
+- `update_submission_status.ps1` — 動画 URL / Devpost URL / 提出日を STATUS + DEVPOST_COPY に反映
+- `submit_closure_check.ps1` — 提出完走ゲート（全 STATUS done + portal check）
+- Devpost 手順書: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)
+
+```powershell
+.\scripts\submit_portal_check.ps1
+.\scripts\rehearse_demo.ps1
+# 録画 -> Devpost -> update_submission_status.ps1 -> submit_closure_check.ps1
+```
+
 ## Phase 8 ハイライト
 
 - `submit_portal_check.ps1` — final_check + ZIP 生成 + Devpost 手順を一括表示
@@ -134,6 +147,7 @@ python scripts\verify_setup.py
 `package_submission.ps1` は verify 未通過時に失敗します。審査員は ZIP 展開後に **bootstrap 必須**（MP4 非同梱）。
 
 ポータル記入: [`docs/PORTAL_CHECKLIST.md`](docs/PORTAL_CHECKLIST.md)  
+Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
 Devpost 基本: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md) | 拡張: [`docs/DEVPOST_EXTENDED.md`](docs/DEVPOST_EXTENDED.md)  
 提出ステータス: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)  
 動画台本: [`docs/DEMO_VIDEO_SCRIPT.md`](docs/DEMO_VIDEO_SCRIPT.md)

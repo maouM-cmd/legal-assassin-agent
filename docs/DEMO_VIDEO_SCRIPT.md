@@ -3,6 +3,8 @@
 ライブデモの代わりに提出ポータルへアップロードする画面録画用台本です。  
 ライブ台本: [DEMO_SCRIPT.md](DEMO_SCRIPT.md) | ポータル記入: [PORTAL_CHECKLIST.md](PORTAL_CHECKLIST.md)
 
+**録画リハーサル:** `.\scripts\rehearse_demo.ps1`（サーバー起動 + テレプロンプター表示）
+
 ## 推奨設定
 
 - 解像度: 1920x1080 または 1280x720
@@ -35,4 +37,4 @@
 - YouTube（限定公開 / 公開）
 - Loom / Google Drive（リンク共有）
 
-URL を [DEVPOST_COPY.md](DEVPOST_COPY.md) の Demo Video 欄と [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) の Demo video URL 行に記入してください。
+URL を [DEVPOST_COPY.md](DEVPOST_COPY.md) の Demo Video 欄に記入し、`.\scripts\update_submission_status.ps1` で [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) を更新してください。

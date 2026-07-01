@@ -3,7 +3,8 @@
 Devpost / Elastic Hackathon 等への記入用。コピペ元は [SUBMISSION.md](../SUBMISSION.md)。
 
 **そのまま貼れる文面:** [DEVPOST_COPY.md](DEVPOST_COPY.md) + [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md)  
-**提出進捗:** [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md)
+**提出進捗:** [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md)  
+**提出手順:** [DEVPOST_SUBMIT_WALKTHROUGH.md](DEVPOST_SUBMIT_WALKTHROUGH.md)
 
 ## 基本情報
 
@@ -42,6 +43,16 @@ python scripts\verify_setup.py
 
 ZIP 利用時: MP4 は含まれないため **bootstrap 必須**。
 
+## Phase 9: 提出実施完走
+
+| 順序 | 作業 |
+|------|------|
+| 1 | `submit_portal_check.ps1` — 自動チェック + ZIP |
+| 2 | `rehearse_demo.ps1` — サーバー起動 + テレプロンプター |
+| 3 | 動画アップロード → Devpost 貼付（[DEVPOST_SUBMIT_WALKTHROUGH.md](DEVPOST_SUBMIT_WALKTHROUGH.md)） |
+| 4 | `update_submission_status.ps1` — URL / 提出日を記録 |
+| 5 | `submit_closure_check.ps1` — 全項目 done 確認 |
+
 ## Phase 8: Devpost 提出完走
 
 ```powershell
@@ -62,7 +73,9 @@ ZIP 利用時: MP4 は含まれないため **bootstrap 必須**。
 - [ ] `.\scripts\submit_portal_check.ps1` が pass（verify + pytest + ZIP）
 - [ ] `docs/screenshots/*.png` がリポジトリに存在
 - [ ] GitHub Actions CI が green
-- [ ] デモ動画をアップロードし URL を [DEVPOST_COPY.md](DEVPOST_COPY.md) + [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) に記入
+- [ ] `.\scripts\rehearse_demo.ps1` で録画リハーサル
+- [ ] `.\scripts\update_submission_status.ps1` で URL 記録
+- [ ] `.\scripts\submit_closure_check.ps1` が pass
 - [ ] リハーサル: [scripts/rehearsal_checklist.md](../scripts/rehearsal_checklist.md)
 
 ## 提出 ZIP

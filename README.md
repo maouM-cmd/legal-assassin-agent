@@ -4,14 +4,24 @@
 
 VOD 事業者の自社コンテンツを正解データとして学習し、YouTube / TikTok / X を 24 時間巡回。反転・ピッチ変更・2 画面合成などの巧妙な違法アップロードを検出し、DMCA 削除申請を自動生成・送信するエージェント。
 
-## 提出前（Phase 8）
+## 提出前（Phase 9）
 
 ```powershell
 .\scripts\submit_portal_check.ps1
+.\scripts\rehearse_demo.ps1
+# 録画 -> Devpost -> update_submission_status.ps1 -> submit_closure_check.ps1
 ```
 
-Devpost 記入: [`docs/DEVPOST_COPY.md`](docs/DEVPOST_COPY.md) + [`docs/DEVPOST_EXTENDED.md`](docs/DEVPOST_EXTENDED.md)  
+Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
 提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)
+
+## Phase 9: 提出実施完走
+
+- **録画リハーサル**: [`scripts/rehearse_demo.ps1`](scripts/rehearse_demo.ps1) — verify + サーバー起動 + テレプロンプター
+- **Elastic 任意確認**: [`scripts/verify_elastic_cloud.ps1`](scripts/verify_elastic_cloud.ps1) — 動画用ライブ Kibana プリフライト
+- **ステータス更新**: [`scripts/update_submission_status.ps1`](scripts/update_submission_status.ps1) — 動画 URL / Devpost URL / 提出日
+- **完走ゲート**: [`scripts/submit_closure_check.ps1`](scripts/submit_closure_check.ps1) — 全 STATUS done + portal check
+- **Devpost 手順書**: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)
 
 ## Phase 8: Devpost 提出完走
 

@@ -74,6 +74,12 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 12 ハイライト
+
+- TikTok プラットフォームアダプター — `backend/platforms/` + `TIKTOK_BACKEND` 切替
+- Playwright 既存挙動を `tiktok_playwright.py` に移動（デモ互換）
+- Partner HTTP API スタブ — [`docs/tiktok_partner_api.md`](docs/tiktok_partner_api.md)
+
 ## Phase 11 ハイライト
 
 - Counter-notification 記録 API + ダッシュボード **Compliance** パネル

@@ -15,6 +15,18 @@ VOD 事業者の自社コンテンツを正解データとして学習し、YouT
 Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
 提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)
 
+## Phase 12: TikTok プラットフォームアダプター
+
+- **`TIKTOK_BACKEND`**: `playwright`（デフォルト）または `partner` で巡回・DMCA バックエンド切替
+- **Partner API スタブ**: `GET /v1/search`, `POST /v1/dmca`（`TIKTOK_PARTNER_API_URL` + `TIKTOK_PARTNER_API_KEY`）
+- **移行手順**: [`docs/tiktok_partner_api.md`](docs/tiktok_partner_api.md)
+
+```env
+TIKTOK_BACKEND=playwright
+TIKTOK_PARTNER_API_URL=
+TIKTOK_PARTNER_API_KEY=
+```
+
 ## Phase 11: コンプライアンスワークフロー
 
 - **Counter-notification**: API + ダッシュボード **RECORD COUNTER** — 受領〜レビュー〜復帰/却下

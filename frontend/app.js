@@ -97,6 +97,9 @@ async function refreshHealth() {
   if (data.api_key_required) {
     modeBadge.textContent += " | API Key";
   }
+  if (data.tiktok_backend) {
+    modeBadge.textContent += ` | TikTok: ${data.tiktok_backend}`;
+  }
   updateApiKeyWarning();
 }
 

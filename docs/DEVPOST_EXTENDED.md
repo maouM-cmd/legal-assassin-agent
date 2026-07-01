@@ -62,7 +62,7 @@ Elasticsearch is a strong fit for both candidate narrowing (kNN) and operational
 ```
 - Elastic Cloud always-on deployment with live Kibana  [setup: scripts/setup_elastic_cloud.ps1 — Phase 10]
 - API key header support in the dashboard UI  [done — Phase 10 SETTINGS]
-- Official platform partner APIs instead of Playwright for TikTok
+- Official platform partner APIs instead of Playwright for TikTok  [adapter layer — Phase 12, docs/tiktok_partner_api.md]
 - Real Chromaprint (fpcalc) in Docker images  [done — Phase 10 Dockerfile]
 - Counter-notification workflow and legal hold integration  [done — Phase 11, docs/compliance_workflow.md]
 ```

@@ -1,4 +1,11 @@
 # Legal Assassin Agent — Update submission status after manual Devpost steps
+param(
+    [string]$VideoUrl,
+    [string]$DevpostUrl,
+    [switch]$ZipUploaded,
+    [string]$SubmittedDate
+)
+
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 Set-Location $Root
@@ -30,13 +37,23 @@ function Update-StatusRow {
     return $newContent
 }
 
-Write-Host "=== Update Submission Status ===" -ForegroundColor Cyan
-Write-Host "Press Enter to skip a field (leave unchanged).`n"
+$cliMode = $PSBoundParameters.Count -gt 0
 
-$videoUrl = Read-Host "Demo video URL"
-$devpostUrl = Read-Host "Devpost project URL"
-$zipAnswer = Read-Host "ZIP uploaded to Devpost? (y/n)"
-$submitDate = Read-Host "Submitted date (YYYY-MM-DD, blank = today)"
+Write-Host "=== Update Submission Status ===" -ForegroundColor Cyan
+
+if ($cliMode) {
+    $videoUrl = $VideoUrl
+    $devpostUrl = $DevpostUrl
+    $zipUploaded = $ZipUploaded.IsPresent
+    $submitDate = $SubmittedDate
+} else {
+    Write-Host "Press Enter to skip a field (leave unchanged).`n"
+    $videoUrl = Read-Host "Demo video URL"
+    $devpostUrl = Read-Host "Devpost project URL"
+    $zipAnswer = Read-Host "ZIP uploaded to Devpost? (y/n)"
+    $zipUploaded = $zipAnswer -match '^[Yy]'
+    $submitDate = Read-Host "Submitted date (YYYY-MM-DD, blank = today)"
+}
 
 $statusContent = Get-Content $StatusFile -Raw
 $copyContent = Get-Content $CopyFile -Raw
@@ -59,12 +76,14 @@ if ($devpostUrl) {
     Write-Host "  Updated Devpost project URL" -ForegroundColor Green
 }
 
-if ($zipAnswer -match '^[Yy]') {
+if ($zipUploaded) {
     $statusContent = Update-StatusRow -Content $statusContent -ItemLabel "ZIP uploaded" -Value "legal-assassin-agent-submission.zip"
     $changed = $true
     Write-Host "  Marked ZIP uploaded" -ForegroundColor Green
-} elseif ($zipAnswer -match '^[Nn]') {
-    Write-Host "  ZIP uploaded left unchanged"
+} elseif (-not $cliMode) {
+    if ($zipAnswer -match '^[Nn]') {
+        Write-Host "  ZIP uploaded left unchanged"
+    }
 }
 
 if ($submitDate -or $devpostUrl) {

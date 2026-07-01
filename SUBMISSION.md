@@ -74,6 +74,12 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 14 ハイライト
+
+- **提出実行ワンストップ** — `execute_submission.ps1`（portal check → リハーサル → Devpost 資料オープン）
+- **非対話ステータス更新** — `update_submission_status.ps1 -VideoUrl ... -DevpostUrl ... -ZipUploaded`
+- **完走ガイド** — [`docs/SUBMISSION_CLOSURE.md`](docs/SUBMISSION_CLOSURE.md)
+
 ## Phase 13 ハイライト
 
 - YouTube / X partner アダプター — `YOUTUBE_BACKEND` / `X_BACKEND` + 共通 `partner_client.py`

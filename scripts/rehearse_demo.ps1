@@ -92,19 +92,25 @@ $segments = @(
         Narration = "Five evasion types: flip, pitch, speed, crop, split-screen. Watch detections appear in Recent Hits."
     },
     @{
-        Time = "2:30-3:15"
+        Time = "2:30-3:00"
+        Screen = "Compliance panel + platform badges"
+        Action = "Show Compliance section; point at mode badge (YouTube: api | TikTok: playwright | X: api)"
+        Narration = "Counter-notification recording and legal hold. Platform adapter backends visible in the mode badge."
+    },
+    @{
+        Time = "3:00-3:30"
         Screen = "COMPARE modal"
         Action = "Click COMPARE on a hit row; show both thumbnails"
         Narration = "Side-by-side reference vs suspect thumbnails for legal review."
     },
     @{
-        Time = "3:15-3:45"
+        Time = "3:30-4:00"
         Screen = "EXPORT AUDIT CSV"
         Action = "Click header EXPORT AUDIT CSV; confirm download"
         Narration = "Compliance export of hits and takedowns as CSV."
     },
     @{
-        Time = "3:45-4:30"
+        Time = "4:00-4:30"
         Screen = "Kibana dashboard or docs/screenshots"
         Action = "Show live Kibana OR docs/screenshots/dashboard-overview.png"
         Narration = "Three Elasticsearch indices visualized: platform detections and evasion breakdown."
@@ -113,7 +119,7 @@ $segments = @(
         Time = "4:30-5:00"
         Screen = "Ending / tech stack"
         Action = "Return to dashboard or show SUBMISSION.md stack slide"
-        Narration = "FastAPI, Gemini, Playwright DMCA, Elastic 8.8 — 24/7 copyright patrol."
+        Narration = "FastAPI, Gemini, platform adapters, Elastic dashboard — 24/7 copyright patrol."
     }
 )
 
@@ -127,12 +133,15 @@ foreach ($seg in $segments) {
 
 Write-Host "=== Recording checklist ===" -ForegroundColor Cyan
 Write-Host "  [ ] Browser zoom 100%; dark theme visible"
+Write-Host "  [ ] Compliance panel shown (counter-notification / legal hold)"
+Write-Host "  [ ] Mode badge shows YouTube: api | TikTok: playwright | X: api"
 Write-Host "  [ ] COMPARE shows both thumbnails"
 Write-Host "  [ ] CSV download starts in browser"
 Write-Host "  [ ] No API keys or .env secrets on screen"
 Write-Host ""
-Write-Host "After recording: upload video, then run:"
-Write-Host "  .\scripts\update_submission_status.ps1"
+Write-Host "After recording + Devpost submit, run:"
+Write-Host '  .\scripts\execute_submission.ps1 -VideoUrl "https://..." -DevpostUrl "https://devpost.com/..." -ZipUploaded'
+Write-Host "  or: .\scripts\update_submission_status.ps1"
 Write-Host ""
 Write-Host "Full checklist: scripts\rehearsal_checklist.md"
 Write-Host "Video script:   docs\DEMO_VIDEO_SCRIPT.md"

@@ -69,9 +69,10 @@ if (Test-Path $StatusFile) {
 
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
+Write-Host "  0. One-stop flow: .\scripts\execute_submission.ps1"
 Write-Host "  1. Record demo video -> paste URL into DEVPOST_COPY.md + SUBMISSION_STATUS.md"
 Write-Host "  2. Open Devpost -> paste from DEVPOST_COPY.md + DEVPOST_EXTENDED.md"
 Write-Host "  3. Upload ZIP if portal requires attachment"
-Write-Host "  4. Submit -> update docs\SUBMISSION_STATUS.md"
+Write-Host "  4. Submit -> .\scripts\update_submission_status.ps1 or execute_submission.ps1 -VideoUrl ... -DevpostUrl ..."
 Write-Host ""
 Write-Host "Portal check complete." -ForegroundColor Green

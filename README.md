@@ -4,17 +4,27 @@
 
 VOD 事業者の自社コンテンツを正解データとして学習し、YouTube / TikTok / X を 24 時間巡回。反転・ピッチ変更・2 画面合成などの巧妙な違法アップロードを検出し、DMCA 削除申請を自動生成・送信するエージェント。
 
-## 提出前（Phase 9）
+## 提出前（Phase 14）
 
 ```powershell
-.\scripts\submit_portal_check.ps1
-.\scripts\rehearse_demo.ps1
-# 録画 -> Devpost -> update_submission_status.ps1 -> submit_closure_check.ps1
+.\scripts\execute_submission.ps1
+# 録画 -> Devpost -> execute_submission.ps1 -VideoUrl ... -DevpostUrl ... -ZipUploaded
 ```
 
 Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
 提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)  
 完走チェックリスト: [`docs/SUBMISSION_CLOSURE.md`](docs/SUBMISSION_CLOSURE.md)
+
+## Phase 14: Devpost 提出実行完走
+
+- **ワンストップ**: [`scripts/execute_submission.ps1`](scripts/execute_submission.ps1) — portal check → リハーサル → 資料オープン → 手動チェックリスト
+- **非対話更新**: `-VideoUrl` / `-DevpostUrl` / `-ZipUploaded` / `-SubmittedDate`
+- **資料オープナー**: [`scripts/open_devpost_assets.ps1`](scripts/open_devpost_assets.ps1)
+
+```powershell
+.\scripts\execute_submission.ps1 -SkipRehearse
+.\scripts\execute_submission.ps1 -VideoUrl "https://..." -DevpostUrl "https://devpost.com/..." -ZipUploaded
+```
 
 ## Phase 13: 提出完走 + プラットフォーム拡張
 

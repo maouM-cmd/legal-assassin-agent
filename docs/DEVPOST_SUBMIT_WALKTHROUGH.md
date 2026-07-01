@@ -7,6 +7,12 @@ Related: [DEVPOST_COPY.md](DEVPOST_COPY.md) | [DEVPOST_EXTENDED.md](DEVPOST_EXTE
 ## Before you start
 
 ```powershell
+.\scripts\execute_submission.ps1 -SkipRehearse
+```
+
+Or step-by-step:
+
+```powershell
 .\scripts\submit_portal_check.ps1
 ```
 
@@ -16,6 +22,7 @@ Confirms tests pass, ZIP exists, and lists pending STATUS items.
 
 | Step | Action | Tool / doc |
 |------|--------|------------|
+| 0 | One-stop prep + assets | `execute_submission.ps1` |
 | 1 | Automated prep + ZIP | `submit_portal_check.ps1` |
 | 2 | Record demo video | `rehearse_demo.ps1` + [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md) |
 | 3 | Upload video (YouTube unlisted / Loom / Drive) | — |

@@ -1,40 +1,50 @@
 # Submission Closure Checklist
 
-One-page guide to complete the Elastic Hackathon Devpost submission after Phase 13.
+One-page guide to complete the Elastic Hackathon Devpost submission.
 
 Related: [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) | [DEVPOST_SUBMIT_WALKTHROUGH.md](DEVPOST_SUBMIT_WALKTHROUGH.md) | [PORTAL_CHECKLIST.md](PORTAL_CHECKLIST.md)
 
-## Automated prep
+## One-stop entry (Phase 14)
 
 ```powershell
-.\scripts\submit_portal_check.ps1
+.\scripts\execute_submission.ps1
 ```
 
-Expects: verify_setup pass, pytest 45+ passed, submission ZIP built, Phase 12/13 artifacts present.
+Runs portal check, rehearsal teleprompter, opens copy docs + ZIP, then shows the manual checklist.
 
-## Manual steps
+Skip rehearsal if server already running:
 
-| Step | Action | Tool / doc |
-|------|--------|------------|
-| 1 | Record demo video | `rehearse_demo.ps1` + [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md) |
-| 2 | Upload video (YouTube unlisted / Loom / Drive) | — |
-| 3 | Fill Devpost form | [DEVPOST_COPY.md](DEVPOST_COPY.md) + [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md) |
-| 4 | Upload ZIP if required | `legal-assassin-agent-submission.zip` |
-| 5 | Click Submit on Devpost | [DEVPOST_SUBMIT_WALKTHROUGH.md](DEVPOST_SUBMIT_WALKTHROUGH.md) |
+```powershell
+.\scripts\execute_submission.ps1 -SkipRehearse
+```
 
-## After submit
+## After Devpost submit (non-interactive)
+
+```powershell
+.\scripts\execute_submission.ps1 `
+  -VideoUrl "https://youtube.com/watch?v=..." `
+  -DevpostUrl "https://devpost.com/software/legal-assassin-agent" `
+  -ZipUploaded `
+  -SubmittedDate "2026-07-01"
+```
+
+Or update status interactively:
 
 ```powershell
 .\scripts\update_submission_status.ps1
 .\scripts\submit_closure_check.ps1
 ```
 
-Enter when prompted:
+## Manual steps
 
-- Demo video URL
-- Devpost project URL
-- ZIP uploaded (y/n)
-- Submitted date (YYYY-MM-DD)
+| Step | Action | Tool / doc |
+|------|--------|------------|
+| 1 | Automated prep + open assets | `execute_submission.ps1` |
+| 2 | Record demo video | [DEMO_VIDEO_SCRIPT.md](DEMO_VIDEO_SCRIPT.md) |
+| 3 | Upload video (YouTube unlisted / Loom / Drive) | — |
+| 4 | Fill Devpost form | [DEVPOST_COPY.md](DEVPOST_COPY.md) + [DEVPOST_EXTENDED.md](DEVPOST_EXTENDED.md) |
+| 5 | Upload ZIP if required | `legal-assassin-agent-submission.zip` |
+| 6 | Click Submit on Devpost | [DEVPOST_SUBMIT_WALKTHROUGH.md](DEVPOST_SUBMIT_WALKTHROUGH.md) |
 
 ## Completion criteria
 
@@ -47,11 +57,11 @@ All rows in [SUBMISSION_STATUS.md](SUBMISSION_STATUS.md) must show `done`:
 | ZIP uploaded | done |
 | Submitted date | done |
 
-Then commit updated status files:
+Then commit:
 
 ```powershell
 git add docs/SUBMISSION_STATUS.md docs/DEVPOST_COPY.md
-git commit -m "Phase 13: mark Devpost submission complete."
+git commit -m "Phase 14: mark Devpost submission complete."
 git push
 ```
 

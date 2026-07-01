@@ -13,6 +13,16 @@ Related: [PORTAL_CHECKLIST.md](PORTAL_CHECKLIST.md) | [DEVPOST_COPY.md](DEVPOST_
 | ZIP uploaded | legal-assassin-agent-submission.zip | pending |
 | Submitted date | | pending |
 
+## Phase 14 flow
+
+| Step | Command |
+|------|---------|
+| 1 One-stop | `.\scripts\execute_submission.ps1` |
+| 2 Finish (CLI) | `.\scripts\execute_submission.ps1 -VideoUrl "..." -DevpostUrl "..." -ZipUploaded` |
+| 3 Closure | `.\scripts\submit_closure_check.ps1` |
+
+See [SUBMISSION_CLOSURE.md](SUBMISSION_CLOSURE.md).
+
 ## Phase 9 flow
 
 | Step | Command |

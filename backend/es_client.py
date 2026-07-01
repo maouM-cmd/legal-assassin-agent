@@ -306,13 +306,14 @@ def url_already_processed(url: str) -> bool:
         return False
 
 
-def update_takedown_by_url(suspect_url: str, updates: dict[str, Any]) -> None:
+def update_takedown_by_url(suspect_url: str, updates: dict[str, Any]) -> bool:
     es = get_es()
     if es is None:
         for td in _memory_takedowns:
             if td.get("suspect_url") == suspect_url:
                 td.update(updates)
-        return
+                return True
+        return False
     try:
         resp = es.search(
             index=takedowns_index(),
@@ -322,8 +323,68 @@ def update_takedown_by_url(suspect_url: str, updates: dict[str, Any]) -> None:
         if resp["hits"]["hits"]:
             doc_id = resp["hits"]["hits"][0]["_id"]
             es.update(index=takedowns_index(), id=doc_id, doc=updates)
+            return True
     except Exception:
         pass
+    return False
+
+
+def get_takedown_by_url(suspect_url: str) -> dict[str, Any] | None:
+    for td in list_takedowns(200):
+        if td.get("suspect_url") == suspect_url:
+            return td
+    return None
+
+
+def update_takedown_by_hit_id(hit_id: str, updates: dict[str, Any]) -> bool:
+    es = get_es()
+    if es is None:
+        for td in _memory_takedowns:
+            if td.get("hit_id") == hit_id:
+                td.update(updates)
+                return True
+        return False
+    try:
+        resp = es.search(
+            index=takedowns_index(),
+            query={"term": {"hit_id.keyword": hit_id}},
+            size=1,
+        )
+        if resp["hits"]["hits"]:
+            doc_id = resp["hits"]["hits"][0]["_id"]
+            es.update(index=takedowns_index(), id=doc_id, doc=updates)
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def is_url_under_legal_hold(suspect_url: str) -> bool:
+    td = get_takedown_by_url(suspect_url)
+    return bool(td and td.get("legal_hold"))
+
+
+def list_takedowns_compliance(
+    legal_hold: bool | None = None,
+    counter_status: str | None = None,
+    limit: int = 50,
+) -> list[dict[str, Any]]:
+    items = list_takedowns(limit * 10)
+    filtered: list[dict[str, Any]] = []
+    for td in items:
+        if legal_hold is not None and bool(td.get("legal_hold")) != legal_hold:
+            continue
+        status = td.get("counter_notification_status") or "none"
+        if counter_status is not None:
+            if counter_status == "active":
+                if status in ("none", "", None):
+                    continue
+            elif status != counter_status:
+                continue
+        filtered.append(td)
+        if len(filtered) >= limit:
+            break
+    return filtered
 
 
 def list_failed_takedowns(limit: int = 20) -> list[dict[str, Any]]:

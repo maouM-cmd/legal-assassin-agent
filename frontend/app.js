@@ -23,6 +23,9 @@ const compareReference = document.getElementById("compare-reference");
 const compareSuspect = document.getElementById("compare-suspect");
 const compareClose = document.getElementById("compare-close");
 const btnAuditExport = document.getElementById("btn-audit-export");
+const complianceOverview = document.getElementById("compliance-overview");
+const counterNotifications = document.getElementById("counter-notifications");
+const legalHolds = document.getElementById("legal-holds");
 const settingsDialog = document.getElementById("settings-dialog");
 const apiKeyInput = document.getElementById("api-key-input");
 const btnSettings = document.getElementById("btn-settings");
@@ -129,6 +132,9 @@ function connectWs() {
       refreshPendingManual();
     } else if (data.type === "PATROL_COMPLETE") {
       refreshStats();
+    } else if (data.type === "COUNTER_NOTIFICATION" || data.type === "LEGAL_HOLD") {
+      refreshCompliance();
+      refreshTakedowns();
     }
   };
 }
@@ -324,12 +330,111 @@ async function refreshTakedowns() {
   for (const td of data.items || []) {
     const el = document.createElement("div");
     el.className = "event-item";
+    const url = td.suspect_url || "";
+    const counter = td.counter_notification_status || "none";
+    const holdBadge = td.legal_hold ? '<span class="legal-hold-badge">LEGAL HOLD</span> ' : "";
     el.innerHTML = `
-      <div class="status-${td.status}">${(td.status || "").toUpperCase()}</div>
-      <div>${td.platform} - ${td.suspect_url || ""}</div>
-      <div class="meta">${td.timestamp || ""}</div>
+      <div class="status-${td.status}">${holdBadge}${(td.status || "").toUpperCase()}</div>
+      <div>${td.platform} - ${url}</div>
+      <div class="meta">${td.timestamp || ""} | counter: ${counter}</div>
+      <div class="btn-row">
+        <button class="btn-record-counter" data-url="${encodeURIComponent(url)}">RECORD COUNTER</button>
+        <button class="btn-legal-hold" data-url="${encodeURIComponent(url)}" data-hold="true">LEGAL HOLD</button>
+        <button class="btn-legal-hold-release" data-url="${encodeURIComponent(url)}" data-hold="false">RELEASE HOLD</button>
+      </div>
     `;
     takedownsList.appendChild(el);
+  }
+  bindTakedownComplianceButtons();
+}
+
+function bindTakedownComplianceButtons() {
+  document.querySelectorAll(".btn-record-counter").forEach((btn) => {
+    btn.onclick = () => recordCounterNotification(decodeURIComponent(btn.dataset.url || ""));
+  });
+  document.querySelectorAll(".btn-legal-hold, .btn-legal-hold-release").forEach((btn) => {
+    btn.onclick = () => setLegalHold(
+      decodeURIComponent(btn.dataset.url || ""),
+      btn.dataset.hold === "true"
+    );
+  });
+}
+
+async function recordCounterNotification(suspectUrl) {
+  if (!suspectUrl) return;
+  const status = window.prompt(
+    "Counter-notification status: received, under_review, restored, dismissed",
+    "received"
+  );
+  if (!status) return;
+  const notes = window.prompt("Notes (optional)", "") || "";
+  const res = await apiFetch("/api/compliance/counter-notification", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ suspect_url: suspectUrl, status, notes }),
+  });
+  if (!res.ok) return;
+  showToast("COUNTER-NOTIFICATION RECORDED");
+  refreshCompliance();
+  refreshTakedowns();
+}
+
+async function setLegalHold(suspectUrl, legalHold) {
+  if (!suspectUrl) return;
+  const notes = window.prompt("Legal hold notes (optional)", "") || "";
+  const res = await apiFetch("/api/compliance/legal-hold", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ suspect_url: suspectUrl, legal_hold: legalHold, notes }),
+  });
+  if (!res.ok) return;
+  showToast(legalHold ? "LEGAL HOLD SET" : "LEGAL HOLD RELEASED", true);
+  refreshCompliance();
+  refreshTakedowns();
+}
+
+async function refreshCompliance() {
+  const [overviewRes, counterRes, holdsRes] = await Promise.all([
+    fetch("/api/compliance/overview"),
+    fetch("/api/compliance/counter-notifications"),
+    fetch("/api/compliance/legal-holds"),
+  ]);
+  const overview = await overviewRes.json();
+  complianceOverview.textContent =
+    `Legal holds: ${overview.legal_holds ?? 0} | Counter received: ${overview.counter_received ?? 0} | Under review: ${overview.under_review ?? 0}`;
+
+  counterNotifications.innerHTML = "";
+  const counters = (await counterRes.json()).items || [];
+  if (!counters.length) {
+    counterNotifications.innerHTML = '<div class="event-item muted">None</div>';
+  } else {
+    for (const td of counters) {
+      const el = document.createElement("div");
+      el.className = "event-item";
+      el.innerHTML = `
+        <div class="status-received">${(td.counter_notification_status || "").toUpperCase()}</div>
+        <div>${td.platform || ""} - ${td.suspect_url || ""}</div>
+        <div class="meta">${td.counter_notification_notes || td.counter_notification_at || ""}</div>
+      `;
+      counterNotifications.appendChild(el);
+    }
+  }
+
+  legalHolds.innerHTML = "";
+  const holds = (await holdsRes.json()).items || [];
+  if (!holds.length) {
+    legalHolds.innerHTML = '<div class="event-item muted">None</div>';
+  } else {
+    for (const td of holds) {
+      const el = document.createElement("div");
+      el.className = "event-item";
+      el.innerHTML = `
+        <div class="legal-hold-badge">LEGAL HOLD</div>
+        <div>${td.platform || ""} - ${td.suspect_url || ""}</div>
+        <div class="meta">${td.legal_hold_notes || td.timestamp || ""}</div>
+      `;
+      legalHolds.appendChild(el);
+    }
   }
 }
 
@@ -356,6 +461,7 @@ function refreshAll() {
   refreshPendingManual();
   refreshFailedTakedowns();
   refreshTakedowns();
+  refreshCompliance();
 }
 
 btnPatrol.addEventListener("click", () => runPatrol(null));

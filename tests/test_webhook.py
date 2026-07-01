@@ -35,6 +35,20 @@ def test_format_takedown_sent():
     assert "youtube" in payload["text"]
 
 
+def test_format_counter_notification():
+    payload = format_payload(
+        {
+            "type": "COUNTER_NOTIFICATION",
+            "takedown": {
+                "suspect_url": "https://example.com/v/1",
+                "counter_notification_status": "received",
+            },
+        }
+    )
+    assert "COUNTER-NOTIFICATION" in payload["text"]
+    assert "received" in payload["text"]
+
+
 @pytest.mark.asyncio
 async def test_send_webhook_disabled():
     with patch.dict(os.environ, {"WEBHOOK_ENABLED": "false", "WEBHOOK_URL": ""}):

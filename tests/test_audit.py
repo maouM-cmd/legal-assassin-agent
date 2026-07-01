@@ -42,6 +42,8 @@ def test_export_includes_hit_row():
     assert "youtube" in csv_data
     assert "flipped" in csv_data
     assert "submitted" in csv_data
+    assert "legal_hold" in csv_data
+    assert "counter_notification_status" in csv_data
 
 
 def test_export_date_filter_naive_bounds():

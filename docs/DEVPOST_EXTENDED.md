@@ -64,5 +64,5 @@ Elasticsearch is a strong fit for both candidate narrowing (kNN) and operational
 - API key header support in the dashboard UI  [done — Phase 10 SETTINGS]
 - Official platform partner APIs instead of Playwright for TikTok
 - Real Chromaprint (fpcalc) in Docker images  [done — Phase 10 Dockerfile]
-- Counter-notification workflow and legal hold integration
+- Counter-notification workflow and legal hold integration  [done — Phase 11, docs/compliance_workflow.md]
 ```

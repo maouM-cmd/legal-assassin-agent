@@ -15,6 +15,20 @@ VOD 事業者の自社コンテンツを正解データとして学習し、YouT
 Devpost 手順: [`docs/DEVPOST_SUBMIT_WALKTHROUGH.md`](docs/DEVPOST_SUBMIT_WALKTHROUGH.md)  
 提出進捗: [`docs/SUBMISSION_STATUS.md`](docs/SUBMISSION_STATUS.md)
 
+## Phase 11: コンプライアンスワークフロー
+
+- **Counter-notification**: API + ダッシュボード **RECORD COUNTER** — 受領〜レビュー〜復帰/却下
+- **Legal hold**: 自動 DMCA / リトライを URL 単位で停止
+- **監査 CSV**: `legal_hold`, `counter_notification_status` 列を追加
+- **運用手順**: [`docs/compliance_workflow.md`](docs/compliance_workflow.md)
+
+```powershell
+# API_KEY 設定時はダッシュボード SETTINGS からキー入力
+GET  /api/compliance/overview
+POST /api/compliance/counter-notification
+POST /api/compliance/legal-hold
+```
+
 ## Phase 10: 本番準備
 
 - **API Key UI**: ダッシュボード **SETTINGS** — `API_KEY` 設定時に `X-API-Key` を localStorage から送信
@@ -147,6 +161,11 @@ scan → download → fingerprint → match → evasion_check → dmca_generate 
 | GET | `/api/hits/{id}/thumbnails` | サムネ比較用 base64 JPEG |
 | GET | `/api/audit/export` | 監査 CSV（`?from=` / `?to=` または `from_date` / `to_date`） |
 | GET | `/api/takedowns` | 撃墜ログ（`?status=failed` 等） |
+| GET | `/api/compliance/overview` | 法務サマリー（hold / counter 件数） |
+| GET | `/api/compliance/counter-notifications` | Counter-notification 一覧 |
+| GET | `/api/compliance/legal-holds` | Legal hold 一覧 |
+| POST | `/api/compliance/counter-notification` | Counter-notification 記録（`X-API-Key` 任意） |
+| POST | `/api/compliance/legal-hold` | Legal hold 設定/解除（`X-API-Key` 任意） |
 | POST | `/api/hits/{id}/approve` | 承認して撃墜（`X-API-Key` 任意） |
 | POST | `/api/hits/{id}/reject` | 却下（`X-API-Key` 任意） |
 | POST | `/api/takedowns/retry` | 失敗撃墜リトライ（`X-API-Key` 任意） |

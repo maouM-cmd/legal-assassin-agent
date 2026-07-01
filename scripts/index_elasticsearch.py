@@ -51,6 +51,29 @@ def main() -> int:
                 "status": {"type": "keyword"},
                 "workflow_status": {"type": "keyword"},
                 "suspect_url": {"type": "keyword"},
+                "legal_hold": {"type": "boolean"},
+                "counter_notification_status": {"type": "keyword"},
+                "counter_notification_at": {"type": "date"},
+                "counter_notification_notes": {"type": "text"},
+            }
+        }
+    }
+
+    takedown_mapping = {
+        "mappings": {
+            "properties": {
+                "timestamp": {"type": "date"},
+                "hit_id": {"type": "keyword"},
+                "platform": {"type": "keyword"},
+                "content_id": {"type": "keyword"},
+                "status": {"type": "keyword"},
+                "suspect_url": {"type": "keyword"},
+                "legal_hold": {"type": "boolean"},
+                "counter_notification_status": {"type": "keyword"},
+                "counter_notification_at": {"type": "date"},
+                "counter_notification_notes": {"type": "text"},
+                "legal_hold_notes": {"type": "text"},
+                "retry_count": {"type": "integer"},
             }
         }
     }
@@ -58,7 +81,7 @@ def main() -> int:
     for name, mapping in [
         (reference_index(), ref_mapping),
         (hits_index(), event_mapping),
-        (takedowns_index(), event_mapping),
+        (takedowns_index(), takedown_mapping),
     ]:
         if not es.indices.exists(index=name):
             es.indices.create(index=name, body=mapping)

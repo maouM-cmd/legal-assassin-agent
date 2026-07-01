@@ -85,11 +85,19 @@ def main() -> int:
         errors.append(f"takedowns-retry: {e}")
 
     try:
+        overview = _get("/api/compliance/overview")
+        assert "legal_holds" in overview, overview
+        print("[OK] /api/compliance/overview")
+    except Exception as e:
+        errors.append(f"compliance-overview: {e}")
+
+    try:
         req = urllib.request.Request(f"{BASE}/api/audit/export", method="GET")
         with urllib.request.urlopen(req, timeout=10) as resp:
             body = resp.read().decode()
             disposition = resp.headers.get("Content-Disposition", "")
             assert "timestamp" in body
+            assert "legal_hold" in body
             assert "legal_assassin" in disposition.lower() or "attachment" in disposition.lower()
         print("[OK] /api/audit/export")
     except Exception as e:

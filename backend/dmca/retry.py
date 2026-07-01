@@ -72,6 +72,16 @@ async def retry_failed_takedowns() -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
 
     for td in failed:
+        if td.get("legal_hold"):
+            results.append(
+                {
+                    "status": "skipped",
+                    "reason": "legal_hold",
+                    "suspect_url": td.get("suspect_url"),
+                }
+            )
+            continue
+
         retries = int(td.get("retry_count", 0))
         if not is_ready_for_retry(td, now):
             results.append(

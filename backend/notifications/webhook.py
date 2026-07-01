@@ -31,6 +31,16 @@ def format_payload(event: dict[str, Any]) -> dict[str, Any]:
     elif event_type == "PENDING_MANUAL":
         td = event.get("takedown", {})
         text = f"MANUAL REQUIRED: {td.get('platform')} {td.get('reason', 'CAPTCHA')}"
+    elif event_type == "COUNTER_NOTIFICATION":
+        td = event.get("takedown", {})
+        text = (
+            f"COUNTER-NOTIFICATION {td.get('counter_notification_status', 'received')}: "
+            f"{td.get('suspect_url')}"
+        )
+    elif event_type == "LEGAL_HOLD":
+        td = event.get("takedown", {})
+        hold = "ON" if td.get("legal_hold") else "OFF"
+        text = f"LEGAL HOLD {hold}: {td.get('suspect_url')}"
     return {"text": text}
 
 

@@ -17,6 +17,13 @@ from pydantic import BaseModel
 from backend.agent import LegalAssassinAgent
 from backend.audit.export import export_compliance_report
 from backend.auth import require_api_key
+from backend.compliance.counter_notification import (
+    compliance_overview,
+    list_counter_notifications,
+    list_legal_holds,
+    record_counter_notification,
+    set_legal_hold,
+)
 from backend.dmca.generator import generate_dmca_notice
 from backend.dmca.retry import retry_failed_takedowns
 from backend.es_client import (
@@ -95,6 +102,18 @@ class CandidateRequest(BaseModel):
     url: str
     platform: str = "youtube"
     title: str = ""
+
+
+class CounterNotificationRequest(BaseModel):
+    suspect_url: str
+    status: str
+    notes: str = ""
+
+
+class LegalHoldRequest(BaseModel):
+    suspect_url: str
+    legal_hold: bool
+    notes: str = ""
 
 
 @app.get("/api/health")
@@ -213,6 +232,51 @@ async def reject_hit(hit_id: str):
 @app.get("/api/takedowns")
 def takedowns(limit: int = 50, status: str | None = None):
     return {"items": list_takedowns(limit, status=status)}
+
+
+@app.get("/api/compliance/overview")
+def compliance_summary():
+    return compliance_overview()
+
+
+@app.get("/api/compliance/counter-notifications")
+def compliance_counter_notifications(limit: int = 50):
+    return {"items": list_counter_notifications(limit)}
+
+
+@app.get("/api/compliance/legal-holds")
+def compliance_legal_holds(limit: int = 50):
+    return {"items": list_legal_holds(limit)}
+
+
+@app.post("/api/compliance/counter-notification", dependencies=[Depends(require_api_key)])
+async def compliance_record_counter(req: CounterNotificationRequest):
+    try:
+        record = record_counter_notification(req.suspect_url, req.status, req.notes)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except LookupError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+    event = {"type": "COUNTER_NOTIFICATION", "takedown": record}
+    await broadcast(event)
+    from backend.notifications.webhook import send_webhook
+
+    await send_webhook(event)
+    return record
+
+
+@app.post("/api/compliance/legal-hold", dependencies=[Depends(require_api_key)])
+async def compliance_set_legal_hold(req: LegalHoldRequest):
+    try:
+        record = set_legal_hold(req.suspect_url, req.legal_hold, req.notes)
+    except LookupError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+    event = {"type": "LEGAL_HOLD", "takedown": record}
+    await broadcast(event)
+    from backend.notifications.webhook import send_webhook
+
+    await send_webhook(event)
+    return record
 
 
 @app.post("/api/takedowns/retry", dependencies=[Depends(require_api_key)])

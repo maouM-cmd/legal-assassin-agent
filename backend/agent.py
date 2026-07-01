@@ -13,6 +13,7 @@ from backend.dmca.submitters.youtube import YouTubeSubmitter
 from backend.download import cleanup_download, download_candidate
 from backend.es_client import (
     get_hit,
+    is_url_under_legal_hold,
     log_infringement_hit,
     log_takedown_request,
     update_hit,
@@ -95,8 +96,19 @@ class LegalAssassinAgent:
             pass
 
     async def submit_dmca_for_hit(self, hit: dict[str, Any]) -> dict[str, Any]:
-        notice = generate_dmca_notice(hit)
+        suspect_url = hit.get("suspect_url", "")
         platform = hit.get("platform", "youtube")
+        if suspect_url and is_url_under_legal_hold(suspect_url):
+            skipped = {
+                "status": "skipped",
+                "reason": "legal_hold",
+                "platform": platform,
+                "suspect_url": suspect_url,
+            }
+            await self._emit({"type": "LEGAL_HOLD", "takedown": skipped})
+            return skipped
+
+        notice = generate_dmca_notice(hit)
         submitter = SUBMITTERS.get(platform)
         takedown_result: dict[str, Any] = {"status": "skipped", "platform": platform}
         if submitter:
@@ -110,6 +122,8 @@ class LegalAssassinAgent:
             "notice_preview": notice.get("body", "")[:500],
             "notice_body": notice.get("body", ""),
             "retry_count": takedown_result.get("retry_count", 0),
+            "legal_hold": False,
+            "counter_notification_status": "none",
         }
         log_takedown_request(takedown_log)
 

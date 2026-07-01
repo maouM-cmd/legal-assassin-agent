@@ -64,6 +64,8 @@ def export_compliance_report(
             "evasion_types",
             "workflow_status",
             "takedown_status",
+            "legal_hold",
+            "counter_notification_status",
         ]
     )
 
@@ -85,6 +87,8 @@ def export_compliance_report(
                 evasion_str,
                 hit.get("workflow_status", hit.get("status", "")),
                 td.get("status", ""),
+                td.get("legal_hold", False),
+                td.get("counter_notification_status", "none"),
             ]
         )
 

@@ -74,6 +74,13 @@ docker compose up --build
 - `review` ヒットは承認キューへ（自動撃墜しない）
 - `confirmed` のみ自動 DMCA 送信
 
+## Phase 11 ハイライト
+
+- Counter-notification 記録 API + ダッシュボード **Compliance** パネル
+- Legal hold — 自動 DMCA / リトライ停止（`agent.py` + `retry.py`）
+- 監査 CSV に `legal_hold` / `counter_notification_status` 列
+- 運用手順: [`docs/compliance_workflow.md`](docs/compliance_workflow.md)
+
 ## Phase 10 ハイライト
 
 - ダッシュボード **SETTINGS** — `API_KEY` 環境変数時に `X-API-Key` を UI から設定
